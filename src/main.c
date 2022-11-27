@@ -24,11 +24,11 @@ int main()
     {
         if(HAL_GetTick()%2==0)
         {
+            getXYFromGyro(&x,&y);
+            applyForce(&ball,(coordinate){x,y});
             drawBall(ball);
             stepBall(&ball);
         }
-        getXYFromGyro(&x,&y);
-        applyForce(&ball,(coordinate){x,y});
         if(BSP_PB_GetState(BUTTON_KEY)!=RESET)
         {
             break;
