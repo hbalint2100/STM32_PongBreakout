@@ -12,15 +12,14 @@ int main()
     HAL_Init();
     SystemClock_Config();
     __HAL_DBGMCU_FREEZE_IWDG();
-    //BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_EXTI);
+    BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
     displayInit();
-    BSP_LED_Init(LED3);
-    BSP_LED_Init(LED4);
     gyroInit();
     menu();
-    HAL_Delay(500);
+    HAL_Delay(200);
     ball ball;
     initBall(&ball);
+    int8_t x, y;
     while (1)
     {
         if(HAL_GetTick()%2==0)
@@ -28,8 +27,14 @@ int main()
             drawBall(ball);
             stepBall(&ball);
         }
-        ball.direction_vector.x = getXFromGyro();
+        getXYFromGyro(&x,&y);
+        applyForce(&ball,(coordinate){x,y});
+        if(BSP_PB_GetState(BUTTON_KEY)!=RESET)
+        {
+            break;
+        }
     }
+    printMsg("PRESS RESET");
 }
 
 static void SystemClock_Config(void)

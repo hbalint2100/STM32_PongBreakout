@@ -1,6 +1,7 @@
 #include "ball.h"
 #include "display.h"
 #include <stdbool.h>
+#include "math.h"
 
 void initBall(ball *ball)
 {
@@ -37,4 +38,11 @@ void stepBall(ball *ball)
         ball->direction_vector.y *= -1;
         ball->position = sumVector(ball->position,ball->direction_vector);
     }
+}
+
+void applyForce(ball *ball, coordinate force)
+{
+    coordinate sum = sumVector(ball->direction_vector,force);
+    ball->direction_vector.x = (int32_t) round(3*sum.x/lengthVector(sum));
+    ball->direction_vector.y = (int32_t) round(3*sum.y/lengthVector(sum));
 }

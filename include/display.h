@@ -1,5 +1,6 @@
 #pragma once
 #include "stm32f429i_discovery_lcd.h"
+#include "stm32f429i_discovery_ts.h"
 
 #define HEIGHT 320
 #define WIDTH 240

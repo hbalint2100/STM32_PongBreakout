@@ -1,4 +1,5 @@
 #include "display.h"
+#include "assert.h"
 
 static int32_t activeLayer = LCD_BACKGROUND_LAYER;
 
@@ -10,6 +11,7 @@ void displayInit()
     BSP_LCD_DisplayOn();
     BSP_LCD_SetLayerVisible(activeLayer,DISABLE);
     BSP_LCD_SetLayerVisible(!activeLayer,DISABLE);
+    HAL_Delay(2);
 }
 
 void swapDisplayedLayer()
@@ -33,11 +35,14 @@ void menu()
     BSP_LCD_Clear(LCD_COLOR_WHITE);
     BSP_LCD_SetFont(&LCD_DEFAULT_FONT);
     BSP_LCD_SetTextColor(LCD_COLOR_DARKBLUE);
-    BSP_LCD_DisplayStringAt(0,HEIGHT/8,(uint8_t *)"BOUNCEY",CENTER_MODE);
-    BSP_LCD_DisplayStringAt(0,HEIGHT/4,(uint8_t *)"MENU",CENTER_MODE);
-    BSP_LCD_DisplayStringAt(0,2*HEIGHT/4,(uint8_t *)"START",CENTER_MODE);
-    BSP_LCD_DisplayStringAt(0,7*HEIGHT/8,(uint8_t *)"V1.0",CENTER_MODE);
+    BSP_LCD_DisplayStringAt(0,1*HEIGHT/8,(uint8_t *)"BOUNCEY",CENTER_MODE);
+    BSP_LCD_DisplayStringAt(0,3*HEIGHT/8,(uint8_t *)"Press",CENTER_MODE);
+    BSP_LCD_DisplayStringAt(0,4*HEIGHT/8,(uint8_t *)"button",CENTER_MODE);
+    BSP_LCD_DisplayStringAt(0,5*HEIGHT/8,(uint8_t *)"to",CENTER_MODE);
+    BSP_LCD_DisplayStringAt(0,6*HEIGHT/8,(uint8_t *)"START",CENTER_MODE);
     swapDisplayedLayer();
+    while (BSP_PB_GetState(BUTTON_KEY) == RESET);
+    
 }
 
 void printMsg(uint8_t *msg)

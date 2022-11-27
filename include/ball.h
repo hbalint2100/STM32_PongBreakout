@@ -13,3 +13,5 @@ void initBall(ball *ball);
 void drawBall(ball ball);
 
 void stepBall(ball *ball);
+
+void applyForce(ball *ball, coordinate force);
